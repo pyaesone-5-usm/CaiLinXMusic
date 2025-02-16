@@ -86,42 +86,10 @@ async def start_pm(client, message: Message, _):
                     text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
     else:
-
-        try:
         out = private_panel(_)
         UP, CPU, RAM, DISK = await bot_sys_stats()
-        lol = await message.reply_text("**•ᴡᴇʟᴄᴏᴍᴇ ʙᴀʙʏ•❣️.....**".format(message.from_user.mention))
-            await lol.edit_text("**•ᴡᴇʟᴄᴏᴍᴇ ʙᴀʙʏ•.❣️....**".format(message.from_user.mention))
-            await lol.edit_text("**•ᴡᴇʟᴄᴏᴍᴇ ʙᴀʙʏ•..❣️...**".format(message.from_user.mention))
-            await lol.edit_text("**•ᴡᴇʟᴄᴏᴍᴇ ʙᴀʙʏ•...❣️..**".format(message.from_user.mention))
-            await lol.edit_text("**•ᴡᴇʟᴄᴏᴍᴇ ʙᴀʙʏ•....❣️.**".format(message.from_user.mention))
-            await lol.edit_text("**•ᴡᴇʟᴄᴏᴍᴇ ʙᴀʙʏ•.....❣️**".format(message.from_user.mention))
-               
-            await lol.delete()
-            lols = await message.reply_text("**⚡️ѕ**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("⚡ѕт")        
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтα**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαя**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαят**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятι**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιи**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιиg**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιиg.**")
-
-            await lols.edit_text("**⚡ѕтαятιиg....**")
-
-            await lols.edit_text("**⚡ѕтαятιиg.**")
-            await lols.edit_text("**⚡ѕтαятιиg....**")
-            await message.reply_sticker("CAACAgUAAxkBAAMFZ448RGxjM8j2H36wdqeXeO1CajMAAo8SAAKb63BXikWOR4jz5Ys2BA")
-            await message.reply_photo(
+        await message.reply_sticker("CAACAgUAAxkBAAMFZ448RGxjM8j2H36wdqeXeO1CajMAAo8SAAKb63BXikWOR4jz5Ys2BA")
+        await message.reply_photo(
             photo=config.START_IMG_URL,
             caption=_["start_2"].format(message.from_user.mention, app.mention, UP, DISK, CPU, RAM),
             reply_markup=InlineKeyboardMarkup(out),
