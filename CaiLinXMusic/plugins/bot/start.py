@@ -93,57 +93,12 @@ async def start_pm(client, message: Message, _):
                     chat_id=config.LOGGER_ID,
                     text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
+        else:
         out = private_panel(_)
         UP, CPU, RAM, DISK = await bot_sys_stats()
-       else:
-        try:
-             out = private_panel(_)
-            lol = await message.reply_text("**•ᴡᴇʟᴄᴏᴍᴇ ʙᴀʙʏ•❣️.....**".format(message.from_user.mention))
-            await lol.edit_text("**•ᴡᴇʟᴄᴏᴍᴇ ʙᴀʙʏ•.❣️....**".format(message.from_user.mention))
-            await lol.edit_text("**•ᴡᴇʟᴄᴏᴍᴇ ʙᴀʙʏ•..❣️...**".format(message.from_user.mention))
-            await lol.edit_text("**•ᴡᴇʟᴄᴏᴍᴇ ʙᴀʙʏ•...❣️..**".format(message.from_user.mention))
-            await lol.edit_text("**•ᴡᴇʟᴄᴏᴍᴇ ʙᴀʙʏ•....❣️.**".format(message.from_user.mention))
-            await lol.edit_text("**•ᴡᴇʟᴄᴏᴍᴇ ʙᴀʙʏ•.....❣️**".format(message.from_user.mention))
-               
-            await lol.delete()
-            lols = await message.reply_text("**⚡️ѕ**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("⚡ѕт")        
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтα**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαя**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαят**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятι**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιи**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιиg**")
-            await asyncio.sleep(0.1)
-            await lols.edit_text("**⚡ѕтαятιиg.**")
-            await lols.edit_text("**⚡ѕтαятιиg....**")
-            await lols.edit_text("**⚡ѕтαятιиg.**")
-            await lols.edit_text("**⚡ѕтαятιиg....**")
-            await message.reply_sticker(random_sticker)
-            if message.chat.photo:
-
-                userss_photo = await app.download_media(
-                    message.chat.photo.big_file_id,
-                )
-            else:
-                userss_photo = "assets/nodp.png"
-            if userss_photo:
-                chat_photo = userss_photo
-            chat_photo = userss_photo if userss_photo else START_IMG_URL
-
-        except AttributeError:
-            chat_photo = "assets/nodp.png"
-        await lols.delete()
-        await m.delete()
+        await message.reply_sticker(random_sticker)
         await message.reply_photo(
-            photo=chat_photo,
+            photo=config.START_IMG_URL,
             caption=_["start_2"].format(message.from_user.mention, app.mention, UP, DISK, CPU, RAM),
             reply_markup=InlineKeyboardMarkup(out),
         )
