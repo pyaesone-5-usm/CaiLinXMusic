@@ -1,4 +1,5 @@
 flask
+uvloop
 telethon==1.33.1
 aiofiles
 apscheduler
