@@ -8,14 +8,14 @@ from pyrogram import filters
 load_dotenv()
 
 # Get this value from my.telegram.org/apps
-API_ID = int(getenv("API_ID", None))
-API_HASH = getenv("API_HASH", None)
+API_ID = int(getenv("API_ID", "21294516"))
+API_HASH = getenv("API_HASH", "3e90489f675513c3679dd08e8c2b2bb3")
 
 # Get your token from @BotFather on Telegram.
-BOT_TOKEN = getenv("BOT_TOKEN", None)
+BOT_TOKEN = getenv("BOT_TOKEN", "7572329528:AAEHTA0OzkSmjcD0Xa4pdfPb8cNtIZW-_8Q")
 
 # Get your mongo url from cloud.mongodb.com
-MONGO_DB_URI = getenv("MONGO_DB_URI", None)
+MONGO_DB_URI = getenv("MONGO_DB_URI", "mongodb+srv://maythushar:maythushar@maythushar.b60dt.mongodb.net/?retryWrites=true&w=majority")
 MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", None)
 PRIVATE_BOT_MODE = getenv("PRIVATE_BOT_MODE", None)
 
@@ -29,7 +29,7 @@ CLEANMODE_DELETE_MINS = int(
 TOKEN_ALLOW = os.getenv("TOKEN_ALLOW", "False")
 
 # Chat id of a group for logging bot's activities
-LOGGER_ID = int(getenv("LOGGER_ID", None))
+LOGGER_ID = int(getenv("LOGGER_ID", "-1002335122520"))
 
 # Get this value from @BRANDRD_ROBOT on Telegram by /id
 OWNER_ID = int(getenv("OWNER_ID", "1318826936"))
