@@ -1,0 +1,84 @@
+# Kinsta Deployment through Github Actions for Bedrock/Sage.
+# 
+# Placed at: .github/workflow/deploy.yml
+#
+# Process should be studied from code, but some quick brief:
+#  - runs composer / sage installation
+#  - moves correct `.env.*` file for multiple configs
+#  - uses rsync to sync files, uses /.rsyncignore file to exclude whatever should not be there
+#  - symlinks uploads folder and symlink release folder to kinsta public hostname
+#  - if you want to clear cache, please uncomment the last job
+
+name: Deploy to Kinsta
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SSH_PORT: # Kinsta SSH port
+      SSH_HOST: # Kinsta SSH host
+      SSH_KEY: # Kinsta SSH Key (added to the user settings)
+      KNOWN_HOSTS: # Known hosts information about your server
+      SSH_USERNAME: # Kinsta SSH Username
+      KINSTA_FOLDER: /www/example_123/ # Kinsta Root folder (end with "/")
+      ENV: staging # Moves .env.<VALUE> to use as config
+
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.3'
+
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ env.SSH_KEY }}
+        name: id_rsa # optional
+        known_hosts: ${{ env.KNOWN_HOSTS }}
+        if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v2
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --no-dev
+
+    # build sage based theme (remove if not used)
+    - name: Install theme PHP dependencies
+      run: cd web/app/themes/sage && composer install --prefer-dist --no-progress --no-dev
+
+    - name: Install and build JS dependencies
+      run: cd web/app/themes/sage && npm install && npm run build
+
+    # Environment config
+    - name: Environment config
+      run: mv .env.${{ env.ENV }} .env
+
+    - name: Create Release Dir On Remote
+      run: ssh ${{ env.SSH_USERNAME }}@${{ env.SSH_HOST }} -p ${{ env.SSH_PORT }} 'mkdir -p ${{ env.KINSTA_FOLDER }}deploy/${{ github.sha }}'
+
+    - name: Push files to the remote
+      run: rsync -avz -e 'ssh -p ${{ env.SSH_PORT }}' --exclude-from=.rsyncignore ./ ${{ env.SSH_USERNAME }}@${{ env.SSH_HOST }}:${{ env.KINSTA_FOLDER }}deploy/${{ github.sha }}
+
+    - name: Ensure shared symlinks
+      run: |
+        ssh ${{ env.SSH_USERNAME }}@${{ env.SSH_HOST }} -p ${{ env.SSH_PORT }} 'mkdir -p ${{ env.KINSTA_FOLDER }}private/shared/uploads && ln -sfn ${{ env.KINSTA_FOLDER }}private/shared/uploads ${{ env.KINSTA_FOLDER }}deploy/${{ github.sha }}/web/app/uploads'
+    - name: Promote production symlink
+      run: ssh ${{ env.SSH_USERNAME }}@${{ env.SSH_HOST }} -p ${{ env.SSH_PORT }} 'ln -sfn ${{ env.KINSTA_FOLDER }}deploy/${{ github.sha }}/web ${{ env.KINSTA_FOLDER }}public'
+
+    # - name: Clear cache on kinsta production
+    #   run: ssh ${{ env.SSH_USERNAME }}@${{ env.SSH_HOST }} -p ${{ env.SSH_PORT }} 'curl http://localhost/kinsta-clear-cache-all'
