@@ -66,7 +66,7 @@
    ```
 5. **Clone the Repository**
    ```bash
-   git clone https://github.com/pyaesone-5-usm/CaiLinXMusic && cd npm start
+   git clone https://github.com/pyaesone-5-usm/CaiLinXMusic && cd CaiLinXMusic
    ```
 6. **Install Requirements**
    ```bash
@@ -90,7 +90,7 @@
     ```
 10. **Run the Bot**
     ```bash
-    npm start
+    bash start
 ━━━━━━━━━━━━━━━━━━━━
 
 <h3 align="center">
