@@ -1,1 +1,1 @@
-worker: bash start
+web: npm start
